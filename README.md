@@ -32,10 +32,10 @@ user@machine rhel-rsyslog$ sudo systemctl status rsyslog
      CGroup: /system.slice/rsyslog.service
              └─3241 /usr/sbin/rsyslogd -n
 
-Jul 11 14:55:48 siem-awsa-t01.sbb.ch systemd[1]: Starting System Logging Service...
-Jul 11 14:55:49 siem-awsa-t01.sbb.ch systemd[1]: Started System Logging Service.
-Jul 11 14:55:49 siem-awsa-t01.sbb.ch rsyslogd[3241]: [origin software="rsyslogd" swVersion="8.2412.0-1.el9" x-pid="3241" x-info="https://www.rsyslog.com"] start
-Jul 11 14:55:49 siem-awsa-t01.sbb.ch rsyslogd[3241]: imjournal: journal files changed, reloading...  [v8.2412.0-1.el9 try https://www.rsyslog.com/e/0 ]
+Jul 11 14:55:48 machine systemd[1]: Starting System Logging Service...
+Jul 11 14:55:49 machine systemd[1]: Started System Logging Service.
+Jul 11 14:55:49 machine rsyslogd[3241]: [origin software="rsyslogd" swVersion="8.2412.0-1.el9" x-pid="3241" x-info="https://www.rsyslog.com"] start
+Jul 11 14:55:49 machine rsyslogd[3241]: imjournal: journal files changed, reloading...  [v8.2412.0-1.el9 try https://www.rsyslog.com/e/0 ]
 ```
 
 - Check service is listening
