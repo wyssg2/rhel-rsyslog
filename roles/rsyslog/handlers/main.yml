@@ -1,0 +1,9 @@
+---
+
+- name: Restart rsyslog service
+  ansible.builtin.service:
+    name: rsyslog
+    state: restarted
+    enabled: true
+  listen: "syslog_config_changed"
+

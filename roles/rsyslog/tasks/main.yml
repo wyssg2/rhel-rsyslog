@@ -1,0 +1,34 @@
+---
+
+- name: Make sure rsyslog is installed
+  ansible.builtin.dnf:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - rsyslog
+    - rsyslog-gnutls
+
+- name: Create directory for logs
+  ansible.builtin.file:
+    path: "{{ log_directory }}"
+    state: directory
+    mode: '0775'
+    owner: root
+    group: root
+
+- name: Restore selinux context on log directory
+  ansible.builtin.shell: "restorecon -R {{ log_directory }}"
+
+- name: Allow rsyslog to listen on non-standard tcp ports
+  community.general.seport:
+    ports: "{{ syslog_ports_tls }}"
+    proto: tcp
+    setype: syslogd_port_t
+    state: present
+
+- name: Write rsyslog configuration
+  ansible.builtin.template:
+    src: custom.conf.j2
+    mode: '0644'
+    dest: /etc/rsyslog.d/custom.conf
+  notify: "syslog_config_changed"

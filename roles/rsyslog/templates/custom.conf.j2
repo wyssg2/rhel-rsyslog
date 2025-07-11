@@ -1,0 +1,28 @@
+# Load necessary modules
+module(
+  load="imtcp"
+  StreamDriver.Name="gtls"
+  StreamDriver.Mode="1"
+  StreamDriver.Authmode="anon"
+)
+
+# Set TLS parameters
+global(
+  DefaultNetstreamDriver="gtls"
+  DefaultNetstreamDriverCAFile="{{ cert_dir }}/{{ certs_subdir }}/{{ cert_filename }}"  # CA file (can be server cert if self-signed)
+  DefaultNetstreamDriverCertFile="{{ cert_dir }}/{{ certs_subdir }}/{{ cert_filename }}"
+  DefaultNetstreamDriverKeyFile="{{ cert_dir }}/{{ private_subdir }}/{{ key_filename }}"
+)
+
+
+template(name="t_hostname_from_syslog" type="string" string="{{ log_directory }}/%HOSTNAME%/%INPUTNAME%.log")
+
+ruleset(name="r_tcp") {
+  action (type="omfile" dynaFile="t_hostname_from_syslog" ioBufferSize="64k")
+}
+
+
+# Listen on ports
+{% for item in syslog_ports_tls %}
+ input(type="imtcp" port="{{ item }}" name="tls_{{ item }}"  ruleset="r_tcp" )
+{% endfor %}

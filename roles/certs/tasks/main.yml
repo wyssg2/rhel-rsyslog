@@ -1,0 +1,37 @@
+---
+
+- name: Ensure OpenSSL is installed
+  ansible.builtin.dnf:
+    name: openssl
+    state: present
+
+- name: Create public directory if it doesn't exist
+  ansible.builtin.file:
+    path: "{{ cert_dir }}/{{ certs_subdir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Create private directory if it doesn't exist
+  ansible.builtin.file:
+    path: "{{ cert_dir }}/{{ private_subdir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: 0700
+
+- name: Generate private key
+  ansible.builtin.command: >
+    openssl genrsa -out {{ cert_dir }}/{{ private_subdir }}/{{ key_filename }} 2048
+  args:
+    creates: "{{ cert_dir }}/{{ private_subdir }}/{{ key_filename }}"
+
+- name: Generate self-signed certificate
+  ansible.builtin.command: >
+    openssl req -new -x509 -key {{ cert_dir }}/{{ private_subdir }}/{{ key_filename }}
+    -out {{ cert_dir }}/{{ certs_subdir }}/{{ cert_filename }}
+    -days 365
+    -subj "/CN={{ cert_name }}"
+  args:
+    creates: "{{ cert_dir }}/{{ certs_subdir }}/{{ cert_filename }}"

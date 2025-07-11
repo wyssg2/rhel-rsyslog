@@ -1,0 +1,7 @@
+---
+
+- name: Configure rsyslog
+  hosts: localhost
+  roles:
+    - certs
+    - rsyslog

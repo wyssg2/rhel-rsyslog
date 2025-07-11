@@ -1,0 +1,15 @@
+---
+
+cert_name: localhost
+cert_dir: /etc/pki/tls
+certs_subdir: certs
+private_subdir: private
+key_filename: "{{ cert_name }}.key"
+cert_filename: "{{ cert_name }}.crt"
+
+log_directory: "/var/log/remote"
+
+syslog_ports_tls:
+  - 30201
+  - 30202
+  - 30203
