@@ -6,7 +6,7 @@
 
 # 2. Install and run ansible to configure rsyslog with tls support
 - Log in to your machine with a sudoer (better not root)
-- You will need connectivity to github.com and RHEL software repositories
+- You will need https connectivity to github.com, galaxy.ansible.com and cdn.redhat.com (RHEL software repositories)
 - sudo dnf install ansible-core git
 - git clone https://github.com/wyssg2/rhel-rsyslog.git
 - cd rhel-rsyslog
